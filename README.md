@@ -1,1 +1,1 @@
-### Sample Android app that runs a local server via `Ktor` and uses `WebView` as a web client
+### Sample Android app that runs a Ktor local server and uses WebView as a web client
