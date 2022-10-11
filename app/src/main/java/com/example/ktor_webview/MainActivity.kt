@@ -2,16 +2,14 @@ package com.example.ktor_webview
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.appcompat.app.AppCompatActivity
-import io.ktor.application.*
-import io.ktor.features.*
-import io.ktor.gson.*
-import io.ktor.http.content.*
-import io.ktor.routing.*
 import io.ktor.server.engine.*
+import io.ktor.server.http.content.*
 import io.ktor.server.netty.*
+import io.ktor.server.routing.*
 import java.io.File
 import java.io.FileOutputStream
 
@@ -47,9 +45,6 @@ class MainActivity : AppCompatActivity() {
 
     private fun initHttpServer(): ApplicationEngine {
         return embeddedServer(Netty, 3333) {
-            install(ContentNegotiation) {
-                gson {}
-            }
             routing {
                 static("static") {
                     files(filesDir)
@@ -63,8 +58,16 @@ class MainActivity : AppCompatActivity() {
         webView.apply {
             loadUrl("http://127.0.0.1:3333/static/index.html")
             webViewClient = object : WebViewClient() {
-                override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
-                    view.loadUrl(url)
+//                override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
+//                    view.loadUrl(url)
+//                    return false
+//                }
+
+                override fun shouldOverrideUrlLoading(
+                    view: WebView?,
+                    request: WebResourceRequest?
+                ): Boolean {
+                    view?.loadUrl(request?.url.toString())
                     return false
                 }
             }
