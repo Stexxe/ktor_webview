@@ -73,6 +73,7 @@ class MainActivity : AppCompatActivity() {
             }
             settings.apply {
                 setSupportZoom(true)
+                domStorageEnabled = true
                 builtInZoomControls = true
                 displayZoomControls = false
                 javaScriptEnabled = true
